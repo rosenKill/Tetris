@@ -208,7 +208,7 @@ public class Controller{
             Point p=tempPoints.get(i);
             int posX=p.getPosX();
             int posY=p.getPosY();
-            if(matrix[posX-1][posY]==1) return false;
+            if(matrix[posX][posY]==1) return false;
         }
         shapeActiv.aroundShape(new ArrayList<>(tempPoints));
         return true;

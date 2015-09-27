@@ -67,34 +67,34 @@ public class Line extends Shape{
                     Point newPoint = new Point(posX, posY);
                     newPoints.add(newPoint);
                 }
-            }
+            }break;
             case 2: {
                 int posY = points.get(1).getPosY();
-                for (int i = 0, deltx = -1; i < points.size(); i++, deltx--) {
+                for (int i = 0, deltx = 1; i < points.size(); i++, deltx--) {
                     Point p = points.get(i);
                     int posX = p.getPosX() + deltx;
                     Point newPoint = new Point(posX, posY);
                     newPoints.add(newPoint);
                 }
-            }
+            }break;
             case 3: {
                 int posX = points.get(1).getPosX();
-                for (int i = 0, deltx = 1; i < points.size(); i++, deltx--) {
+                for (int i = 0, delty = 1; i < points.size(); i++, delty--) {
                     Point p = points.get(i);
-                    int posY = p.getPosY() + deltx;
+                    int posY = p.getPosY() + delty;
                     Point newPoint = new Point(posX, posY);
                     newPoints.add(newPoint);
                 }
-            }
+            }break;
             case 0: {
                 int posY = points.get(1).getPosY();
-                for (int i = 0, delty = 1; i < points.size(); i++, delty++) {
+                for (int i = 0, deltx = -1; i < points.size(); i++, deltx++) {
                     Point p = points.get(i);
-                    int posX = p.getPosX() + delty;
+                    int posX = p.getPosX() + deltx;
                     Point newPoint = new Point(posX, posY);
                     newPoints.add(newPoint);
                 }
-            }
+            }break;
         }
     return newPoints;
     }
