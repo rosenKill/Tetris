@@ -42,7 +42,6 @@ public class FieldView extends GridPane{
                 rect.setFill(Color.RED);
                 matrixShape[i][j]=rect;
                 this.add(rect, i, j);
-                System.out.println(i+"n "+j);
             }
     }
 

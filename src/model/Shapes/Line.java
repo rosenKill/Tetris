@@ -28,34 +28,21 @@ public class Line extends Shape{
 
 
     }
-//    public void nextState(){
-////        Iterator iterator=new Iterator() {
-////            @Override
-////            public boolean hasNext() {
-////                return false;
-////            }
-////
-////            @Override
-////            public Object next() {
-////                return null;
-////            }
-////        }
+
+    public Line() {
+
+    }
+
+    //    public void changeStateToNext(){
+//        int oldState=activState;
 //        if(activState!=states.size()-1) {
 //            activState = states.get(activState + 1);
 //        }else{
 //            activState=0;
 //        }
+//
+//
 //    }
-    public void changeStateToNext(){
-        int oldState=activState;
-        if(activState!=states.size()-1) {
-            activState = states.get(activState + 1);
-        }else{
-            activState=0;
-        }
-
-
-    }
     public List<Point> getPointForAround(int state){
         List<Point> newPoints=new ArrayList<Point>(); //create new temp list with coord for check on empty
         switch (state) {

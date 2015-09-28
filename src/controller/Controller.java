@@ -11,6 +11,7 @@ import model.ModelField;
 import model.Point;
 import model.Shapes.Line;
 import model.Shapes.Shape;
+import model.Shapes.Square;
 import view.FieldView;
 
 
@@ -93,9 +94,17 @@ public class Controller{
         }
     }
 
-    private void createNewShape() {
-        Line line=new Line(NUMBER_X,NUMBER_Y);
-        shapeActiv=line;
+//    private void createNewShape() {
+////        Line line=new Line(NUMBER_X,NUMBER_Y);
+////        shapeActiv=line;
+//        Square square=new Square(NUMBER_X,NUMBER_Y);
+//        shapeActiv=square;
+//        activState=states.get(0);
+//        updateField();
+//    }
+    public void createNewShape(){
+        ListFigures listFigures=new ListFigures(NUMBER_X,NUMBER_Y);
+        shapeActiv=listFigures.getRandomShape();
         activState=states.get(0);
         updateField();
     }
@@ -168,12 +177,24 @@ public class Controller{
             break;
         case RIGHT:moveShape("Right");
             break;
-        case UP: System.out.println("around");
+        case UP:
+          //checkKindOfShape();
            moveShape("Around");
             break;
 
     }
     }
+
+    private void checkKindOfShape() {
+        if(shapeActiv instanceof Line){
+            System.out.println("LINEEEEEEEEEEEEEEEEEE");
+        }
+        if(shapeActiv instanceof Square){
+            System.out.println("SQUAREEEEEEEE");
+        }
+
+    }
+
     public void colectionActionAfterStopShape(){
        // System.out.println("colectionActionAfterStopShape");
        modelField.convertationDynamicToStatic();
@@ -184,6 +205,7 @@ public class Controller{
 
     }
     public void aroundShape(){
+
         int oldState=activState;
         if(activState!=states.size()-1) {
             activState = states.get(activState + 1);
@@ -191,18 +213,27 @@ public class Controller{
             activState=0;
         }
         if(isShapeMoveAround()){
-            System.out.println("all zbc");
+            System.out.println("around zbc");
         }else{
-            System.out.println("GOVNO");
+            System.out.println("around GOVNO");
         activState=oldState;
         }
 
     }
 
     private boolean isShapeMoveAround() {
-
-      Line line=(Line) shapeActiv;
-        ArrayList<Point> tempPoints= (ArrayList<Point>) line.getPointForAround(activState);
+        ArrayList<Point> tempPoints=new ArrayList<>();
+        if(shapeActiv instanceof Line){
+            Line line=(Line) shapeActiv;
+            tempPoints= (ArrayList<Point>) line.getPointForAround(activState);
+        }else{
+            if(shapeActiv instanceof Square){ return false; }
+        }
+//        if(shapeActiv instanceof Square){
+//            System.out.println("SQUAREEEEEEEE");
+//        }
+//      Line line=(Line) shapeActiv;
+//        ArrayList<Point> tempPoints= (ArrayList<Point>) line.getPointForAround(activState);
         int matrix[][]=modelField.getFieldMatrix();
         for(int i=0;i<tempPoints.size();i++){
             Point p=tempPoints.get(i);
@@ -210,7 +241,7 @@ public class Controller{
             int posY=p.getPosY();
             if(matrix[posX][posY]==1) return false;
         }
-        shapeActiv.aroundShape(new ArrayList<>(tempPoints));
+        shapeActiv.setNewPointsAfterAround(new ArrayList<>(tempPoints));
         return true;
     }
 }

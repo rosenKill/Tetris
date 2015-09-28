@@ -9,6 +9,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Label?>
 <BorderPane fx:controller="controller.Controller"
           xmlns:fx="http://javafx.com/fxml" >
     <top>
@@ -29,6 +30,6 @@
    </left>
 
     <right>
-    <!--<Button fx:id="btn" text="asd" textFill="blue" />-->
+        <Label text="SCORE"/>
     </right>
 </BorderPane>

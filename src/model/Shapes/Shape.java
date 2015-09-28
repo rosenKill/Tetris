@@ -37,7 +37,7 @@ public class Shape {
         }
     }
 
-    public void aroundShape(ArrayList<Point> points){
+    public void setNewPointsAfterAround(ArrayList<Point> points){
         this.points=points;
 
     }
