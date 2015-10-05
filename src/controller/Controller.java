@@ -12,6 +12,7 @@ import model.Point;
 import model.Shapes.Line;
 import model.Shapes.Shape;
 import model.Shapes.Square;
+import model.Shapes.ZRight;
 import view.FieldView;
 
 
@@ -94,17 +95,12 @@ public class Controller{
         }
     }
 
-//    private void createNewShape() {
-////        Line line=new Line(NUMBER_X,NUMBER_Y);
-////        shapeActiv=line;
-//        Square square=new Square(NUMBER_X,NUMBER_Y);
-//        shapeActiv=square;
-//        activState=states.get(0);
-//        updateField();
-//    }
+
     public void createNewShape(){
         ListFigures listFigures=new ListFigures(NUMBER_X,NUMBER_Y);
         shapeActiv=listFigures.getRandomShape();
+//        ZRight zRight=new ZRight(NUMBER_X,NUMBER_Y);
+//        shapeActiv=zRight;
         activState=states.get(0);
         updateField();
     }
@@ -228,12 +224,14 @@ public class Controller{
             tempPoints= (ArrayList<Point>) line.getPointForAround(activState);
         }else{
             if(shapeActiv instanceof Square){ return false; }
+            else{
+                if(shapeActiv instanceof ZRight){
+                    ZRight line=(ZRight) shapeActiv;
+                    tempPoints= (ArrayList<Point>) line.getPointForAround(activState);
+                }
+
+            }
         }
-//        if(shapeActiv instanceof Square){
-//            System.out.println("SQUAREEEEEEEE");
-//        }
-//      Line line=(Line) shapeActiv;
-//        ArrayList<Point> tempPoints= (ArrayList<Point>) line.getPointForAround(activState);
         int matrix[][]=modelField.getFieldMatrix();
         for(int i=0;i<tempPoints.size();i++){
             Point p=tempPoints.get(i);

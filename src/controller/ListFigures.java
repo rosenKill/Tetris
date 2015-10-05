@@ -3,6 +3,7 @@ package controller;
 import model.Shapes.Line;
 import model.Shapes.Shape;
 import model.Shapes.Square;
+import model.Shapes.ZRight;
 
 import java.util.ArrayList;
 
@@ -30,6 +31,7 @@ public class ListFigures {
         shapeArrayList=new ArrayList<>();
         shapeArrayList.add(new Square(x,y));
          shapeArrayList.add(new Line(x,y));
+        shapeArrayList.add(new ZRight(x,y));
 
     }
     public Shape getRandomShape(){
