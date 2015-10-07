@@ -1,5 +1,6 @@
 package controller;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -82,7 +83,6 @@ public class Controller{
         return scene;
     }
 
-
     private class NewGameItemHandler implements EventHandler<ActionEvent> {  //start move shape
         @Override
         public void handle(ActionEvent event) {
@@ -90,17 +90,19 @@ public class Controller{
             TimerTask timerTaskMultiply=new TimerTask() {
                 @Override
                 public void run() {
-                    moveShape("Down");
+                    Platform.runLater(
+                            new Runnable() {
+                                @Override
+                                public void run() {
+                                    moveShape("Down");
+                                }
+                            }
+                    );
+
                 }
             };
-            TimerTask timerTaskSingle=new TimerTask() {
-                @Override
-                public void run() {
-                   createNewShape();
-                }
-            };
-            timer.schedule(timerTaskSingle,1000);
-            timer.schedule(timerTaskMultiply,2000,time);
+            createNewShape();
+            timer.schedule(timerTaskMultiply,1000,time);
         }
     }
 
@@ -204,8 +206,7 @@ public class Controller{
         }
         score+=modelField.checkCurrentRowAndDeleteIt();  //uncomment it,when this function will be ready
         fieldView.updateColor(modelField.getFieldMatrix());
-
-
+        scorePanel.setScoreCurrent(score);
         createNewShape();
 
     }

@@ -1,8 +1,6 @@
 package view;
 
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 
 /**
@@ -23,6 +21,7 @@ public class ScorePanel extends VBox {
 
     public void setScoreCurrent(int score) {
         String str=Integer.toString(score);
-        scoreCurrent.setText("asd");
+        System.out.println(str);
+        scoreCurrent.setText(str);
     }
 }
