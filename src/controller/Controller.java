@@ -3,10 +3,10 @@ package controller;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.MenuItem;
 import javafx.scene.input.KeyCode;
-
 import model.ModelField;
 import model.Point;
 import model.Shapes.Line;
@@ -14,9 +14,14 @@ import model.Shapes.Shape;
 import model.Shapes.Square;
 import model.Shapes.ZRight;
 import view.FieldView;
+import view.LoseMsgBox;
+import view.ScorePanel;
 
-
-import java.util.*;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 /**
  * Created by User on 13.09.2015.
@@ -24,9 +29,12 @@ import java.util.*;
 public class Controller{
     private static final int NUMBER_X=8;   //HEAD GRaphics FIELD SIZE
     private static final int NUMBER_Y=15;   //ModelField =graphicsField+2(X)+2(Y)
+    private static Scene scene;
     private  ModelField modelField;
     private Timer timer;
-    @FXML private Button btn;
+    private int score=0;
+    private int time=200;
+    @FXML private ScorePanel scorePanel;
     @FXML private FieldView fieldView;
     @FXML private MenuItem newGameItem;
     @FXML private MenuItem exitGameItem;
@@ -67,8 +75,12 @@ public class Controller{
     public int getX(){return NUMBER_X;};
     public int getY(){return NUMBER_Y;};
 
-
-
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
+    public static Scene getScene(){
+        return scene;
+    }
 
 
     private class NewGameItemHandler implements EventHandler<ActionEvent> {  //start move shape
@@ -79,10 +91,7 @@ public class Controller{
                 @Override
                 public void run() {
                     moveShape("Down");
-                   // System.out.println(new Date());
                 }
-
-
             };
             TimerTask timerTaskSingle=new TimerTask() {
                 @Override
@@ -91,7 +100,7 @@ public class Controller{
                 }
             };
             timer.schedule(timerTaskSingle,1000);
-            timer.schedule(timerTaskMultiply,2000,400);
+            timer.schedule(timerTaskMultiply,2000,time);
         }
     }
 
@@ -111,7 +120,9 @@ public class Controller{
                 shapeActiv.moveDown();}
                 else{
                 colectionActionAfterStopShape();
-                }break;
+               // scorePanel.setScoreCurrent(score);
+
+            }break;
             case "Left":
                 if(isShapeMoveLeft())
                     shapeActiv.moveLeft();
@@ -174,32 +185,38 @@ public class Controller{
         case RIGHT:moveShape("Right");
             break;
         case UP:
-          //checkKindOfShape();
-           moveShape("Around");
+            moveShape("Around");
             break;
 
+
     }
     }
 
-    private void checkKindOfShape() {
-        if(shapeActiv instanceof Line){
-            System.out.println("LINEEEEEEEEEEEEEEEEEE");
-        }
-        if(shapeActiv instanceof Square){
-            System.out.println("SQUAREEEEEEEE");
-        }
-
-    }
 
     public void colectionActionAfterStopShape(){
-       // System.out.println("colectionActionAfterStopShape");
        modelField.convertationDynamicToStatic();
-
-        modelField.checkCurrentRowAndDeleteIt();  //uncomment it,when this function will be ready
+        if( modelField.checkLoseGame() ){
+            try {
+                cancelGame();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        score+=modelField.checkCurrentRowAndDeleteIt();  //uncomment it,when this function will be ready
         fieldView.updateColor(modelField.getFieldMatrix());
+
+
         createNewShape();
 
     }
+
+    private void cancelGame() throws IOException {
+
+        timer.cancel();
+        LoseMsgBox loseMsgBox=new LoseMsgBox(Alert.AlertType.CONFIRMATION);
+        loseMsgBox.show();
+    }
+
     public void aroundShape(){
 
         int oldState=activState;
@@ -208,11 +225,8 @@ public class Controller{
         }else{
             activState=0;
         }
-        if(isShapeMoveAround()){
-            System.out.println("around zbc");
-        }else{
-            System.out.println("around GOVNO");
-        activState=oldState;
+        if(!isShapeMoveAround()){
+            activState=oldState;
         }
 
     }
@@ -242,4 +256,5 @@ public class Controller{
         shapeActiv.setNewPointsAfterAround(new ArrayList<>(tempPoints));
         return true;
     }
+
 }

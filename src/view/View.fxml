@@ -10,6 +10,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.Label?>
+<?import view.ScorePanel?>
 <BorderPane fx:controller="controller.Controller"
           xmlns:fx="http://javafx.com/fxml" >
     <top>
@@ -29,7 +30,10 @@
         </VBox>
    </left>
 
-    <right>
-        <Label text="SCORE"/>
-    </right>
+    <center>
+        <VBox>
+        <ScorePanel fx:id="scorePanel"/>
+        </VBox>
+        <!--<Label text="SCORE" BorderPane.alignment="CENTER_RIGHT"/>-->
+    </center>
 </BorderPane>

@@ -19,20 +19,16 @@ public class ModelField {
             for(int j=0;j<numberY-1;j++){
                 fMatrix[i][j]=0;
             }
-        for(int i=0;i<numberY;i++){  //����� ���
+        for(int i=0;i<numberY;i++){
             fMatrix[0][i]=1;
         }
-        for(int i=0;i<numberY;i++){ //������ ���
+        for(int i=0;i<numberY;i++){
             fMatrix[numberX-1][i]=1;
         }
-        for(int i=1;i<numberX-1;i++){ //������ ���
+        for(int i=1;i<numberX-1;i++){
             fMatrix[i][numberY-1]=1;
         }
-//       List<ArrayList<Integer>> lists=new ArrayList<>();
-//        lists.get(0).add(new ArrayList<>());
         fieldMatrix=fMatrix;
-    System.out.println("asdasdasd");
-
     }
 
     public int[][] getFieldMatrix(){
@@ -63,13 +59,15 @@ public class ModelField {
             }
     }
 
-    public void checkCurrentRowAndDeleteIt() {
+    public int checkCurrentRowAndDeleteIt() {
+        int numberRow=0;
         for(int i=1;i<numberY-1;i++) {
             boolean bl=true;
             for (int j = 1; j < numberX - 1; j++) {
                 if(fieldMatrix[j][i]==0){bl=false;break;}
             }
             if(bl==true){
+                numberRow++;
                for(int pointY=i;pointY>0;pointY--)
                    for(int pointX=1;pointX<numberX;pointX++){
                        fieldMatrix[pointX][pointY]=fieldMatrix[pointX][pointY-1];
@@ -78,5 +76,14 @@ public class ModelField {
 
             }
         }
+        return numberRow;
+    }
+    public boolean checkLoseGame(){
+        for(int i=1;i<numberX-1;i++){
+          if(fieldMatrix[i][1]==1){
+              return true;
+          }
+        }
+        return false;
     }
 }

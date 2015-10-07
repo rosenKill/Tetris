@@ -6,11 +6,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.input.KeyEvent;
-import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 
-public class Main extends Application {
+public class EntryPoint extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
@@ -21,7 +20,8 @@ public class Main extends Application {
         controller.createField();
         Scene scene=new Scene(root, 600, 700);
         primaryStage.setScene(scene);
-        scene.addEventHandler(KeyEvent.KEY_PRESSED,(key)->controller.processingKeyBoard(key.getCode()));//
+        controller.setScene(scene);
+        scene.addEventHandler(KeyEvent.KEY_PRESSED,(key)->controller.processingKeyBoard(key.getCode()));
         primaryStage.show();
     }
 
